@@ -2,47 +2,54 @@
 
 
 
-# [Project Name] 🎯
+# [NEXUS // Spatial AI Workspace Optimizer] 🎯
 
 
 ## Basic Details
-### Team Name: [Name]
+### Team Name: [Waguri]
 
 
 ### Team Members
-- Team Lead: [Name] - [College]
-- Member 2: [Name] - [College]
-- Member 3: [Name] - [College]
+- Team Lead: Jibin James - School of Engineering, CUSAT
 
 ### Project Description
-[2-3 lines about what your project does]
+An enterprise-grade multimodal spatial computing HUD that scans your desk via live webcam feed to mathematically compute where to set down everyday items. It combines real-time WebRTC video streams with Google Gemini Flash vision reasoning to evaluate spill zones, reachability, and clutter before locking onto coordinates with military-style targeting reticles.
 
 ### The Problem (that doesn't exist)
-[What ridiculous problem are you solving?]
+Human beings have been setting cups, phones, and water bottles down on flat surfaces for thousands of years using basic depth perception and common sense. However, this relies on unverified biological intuition rather than high-performance spatial computing. What if placing your water bottle 3 centimeters too close to your mouse pad decreases your daily desk operational efficiency by 2.4%? Humanity simply cannot afford such unoptimized desk entropy.
 
 ### The Solution (that nobody asked for)
-[How are you solving it? Keep it fun!]
+Instead of using your eyes and hands like a normal person, point an HD camera at your table, launch a dark-mode cyberpunk glassmorphism terminal, type what you are holding, and wait for a trillion-parameter cloud foundation model to run safety, clearance, and spill-hazard telemetry before telling you the single approved coordinate box where you are permitted to set your mug. Isnt this just useless ,  I mean cant u decide where you need to keep a bottle
+duh...
 
 ## Technical Details
 ### Technologies/Components Used
 For Software:
-- [Languages used]
-- [Frameworks used]
-- [Libraries used]
-- [Tools used]
+Languages: Python 3.10+, JavaScript (ES6+), HTML5, CSS3
 
-For Hardware:
-- [List main components]
-- [List specifications]
-- [List tools required]
+Frameworks: FastAPI, Uvicorn
+
+Libraries: google-genai (Gemini SDK), Pillow (PIL), Pydantic, python-dotenv
+
+APIs & Web Standards: Gemini 3.6 Flash Multimodal Vision API, WebRTC MediaStreams API (getUserMedia), HTML5 Canvas 2D Context API
+
+Tools: Visual Studio Code, Git, Browser DevTools
+
 
 ### Implementation
 For Software:
 # Installation
-[commands]
+git clone https://github.com/your-username/nexus-spatial-optimizer.git
+cd nexus-spatial-optimizer
+pip install fastapi uvicorn python-dotenv pydantic pillow google-genai
+
+
+Set up environment credentials in a .env file:
+
+GEMINI_API_KEY=your_gemini_api_key_here
 
 # Run
-[commands]
+uvicorn app:app --reload --port 8000
 
 ### Project Documentation
 For Software:
