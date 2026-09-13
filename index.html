@@ -497,7 +497,21 @@
       if (e.key === 'Enter') executeScan();
     });
 
-    initCamera();
+    async function startCameraSession() {
+  try {
+    stream = await navigator.mediaDevices.getUserMedia({
+      video: { width: { ideal: 1920 }, height: { ideal: 1080 }, facingMode: "environment" }
+    });
+    video.srcObject = stream;
+    await video.play();
+
+    document.getElementById('start-modal').style.display = "none";
+    document.getElementById('dock').style.display = "flex";
+    render();
+  } catch (err) {
+    alert("Camera access denied: " + err.message);
+  }
+}
   </script>
 </body>
 </html>
