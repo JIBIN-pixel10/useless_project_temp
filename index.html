@@ -333,6 +333,9 @@
     const tHazards = document.getElementById('telemetry-hazards');
     const viewport = document.getElementById('viewport');
     const shutdownView = document.getElementById('shutdown-view');
+    const startModal = document.getElementById('start-modal');
+    const dock = document.getElementById('dock');
+    const engineStatus = document.getElementById('engine-status');
 
     let stream = null;
     let targetBox = null;
@@ -347,16 +350,23 @@
     window.addEventListener('resize', syncDimensions);
     syncDimensions();
 
-    async function initCamera() {
+    async function startCameraSession() {
       try {
         stream = await navigator.mediaDevices.getUserMedia({
           video: { width: { ideal: 1920 }, height: { ideal: 1080 }, facingMode: "environment" }
         });
         video.srcObject = stream;
-        video.play();
+        await video.play();
+
+        if (startModal) startModal.style.display = "none";
+        if (dock) dock.style.display = "flex";
+        if (engineStatus) {
+          engineStatus.className = "status-badge";
+          engineStatus.innerHTML = '<div class="status-dot"></div> ENGINE ONLINE';
+        }
         render();
       } catch (err) {
-        alert("Camera access error: " + err.message);
+        alert("Camera initialization error: " + err.message);
       }
     }
 
@@ -370,13 +380,18 @@
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       targetBox = null;
       animatedBox = null;
-      telemetry.style.display = "none";
-      shutdownView.style.display = "flex";
+      if (telemetry) telemetry.style.display = "none";
+      if (dock) dock.style.display = "none";
+      if (shutdownView) shutdownView.style.display = "flex";
     }
 
     function restartSession() {
-      shutdownView.style.display = "none";
-      initCamera();
+      if (shutdownView) shutdownView.style.display = "none";
+      if (startModal) startModal.style.display = "flex";
+      if (engineStatus) {
+        engineStatus.className = "status-badge standby";
+        engineStatus.innerHTML = '<div class="status-dot"></div> STANDBY';
+      }
     }
 
     function drawBrackets(x1, y1, x2, y2, color, len = 20) {
@@ -417,7 +432,6 @@
           offY = 0;
         }
 
-        // Horizontal flip mapping: Invert X for mirrored webcam view
         const mirroredXmin = 1000 - xmax;
         const mirroredXmax = 1000 - xmin;
 
@@ -496,22 +510,6 @@
     itemInput.addEventListener('keydown', (e) => {
       if (e.key === 'Enter') executeScan();
     });
-
-    async function startCameraSession() {
-  try {
-    stream = await navigator.mediaDevices.getUserMedia({
-      video: { width: { ideal: 1920 }, height: { ideal: 1080 }, facingMode: "environment" }
-    });
-    video.srcObject = stream;
-    await video.play();
-
-    document.getElementById('start-modal').style.display = "none";
-    document.getElementById('dock').style.display = "flex";
-    render();
-  } catch (err) {
-    alert("Camera access denied: " + err.message);
-  }
-}
   </script>
 </body>
 </html>
