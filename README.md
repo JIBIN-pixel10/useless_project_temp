@@ -51,18 +51,32 @@ GEMINI_API_KEY=your_gemini_api_key_here
 # Run
 uvicorn app:app --reload --port 8000
 
-### Project Documentation
+
 For Software:
+<img width="1917" height="975" alt="first stage" src="https://github.com/user-attachments/assets/aef0cca2-86c6-4172-a71d-246a45378651" />
 
-# Screenshots (Add at least 3)
-![Screenshot1](Add screenshot 1 here with proper name)
-*Add caption explaining what this shows*
 
-![Screenshot2](Add screenshot 2 here with proper name)
-*Add caption explaining what this shows*
+1.Initial Standby State (first stage.jpg)
 
-![Screenshot3](Add screenshot 3 here with proper name)
-*Add caption explaining what this shows*
+System Status: Engine online, live WebRTC camera feed streaming without coordinate drift.
+
+Controls: Minimalist floating bottom dock with active target input field (Water Bottle) ready for real-time spatial evaluation.
+
+HUD Layer: Clean glassmorphism interface with subtle grid overlays and quick-action navigation controls.
+
+<img width="1912" height="955" alt="running" src="https://github.com/user-attachments/assets/ab2eb576-813f-4bb9-81a2-6ec440d3f08e" />
+
+2. Live Spatial Analysis (running.jpg)
+
+Inference State: High-resolution sensor capture sent to the multi-model backend pipeline.
+
+Visual Feedback: Animated cyan laser scanline sweeps vertically across the viewport while disabling input to signify ongoing spatial calculations.
+
+Affordance Evaluation: The vision engine analyzes target geometry, classifies required surface type, and computes negative exclusion masks (filtering out people, furniture, and monitors).
+
+<img width="1528" height="763" alt="result" src="https://github.com/user-attachments/assets/0984567a-74f7-4f5b-9cf4-39d7dc754b75" />
+
+3. Precision Target Lock (result.jpg)Bounding Lock: System successfully identifies a clean, continuous bare wall section on the left for mounting a tv.Exclusion Accuracy: Coordinates strictly avoid the ceiling electrical conduits, foreground user, and background cubicle seating.Telemetry Diagnostics: Top-left heads-up display presents the ergonomic rationale, confidence score ($94.5\%$), and explicit catalog of avoided hazards (electrical conduits, switch box, people in background).
 
 # Diagrams
 ![Workflow](Add your workflow/architecture diagram here)
@@ -78,27 +92,31 @@ For Hardware:
 *Add caption explaining the schematic*
 
 # Build Photos
-![Components](Add photo of your components here)
-*List out all components shown*
+<img width="276" height="197" alt="Screenshot 2026-09-13 115112" src="https://github.com/user-attachments/assets/e6f69720-020b-4df4-953a-69d89b3b27f0" />
+__pycache__/: Auto-generated Python directory that stores compiled bytecode (.pyc files) to accelerate module loading on subsequent executions.
 
-![Build](Add photos of build process here)
-*Explain the build steps*
+.env: Local environment configuration storing secret credentials, primarily your GEMINI_API_KEY, isolated from source control.
 
-![Final](Add photo of final product here)
-*Explain the final build*
+.gitignore: Git configuration file specifying which files or folders (like .env, __pycache__, or large weights) Git should avoid tracking or pushing to GitHub.
+
+app.py (Status: M - Modified): The FastAPI backend server handling API routing (/api/scan), multi-model fallback execution, image preprocessing, and Gemini spatial grounding instructions.
+
+index.html (Status: M - Modified): The single-page frontend application containing the WebRTC camera stream handler, cyberpunk HUD overlay, canvas coordinate rendering, and mirror-inversion logic.
+
+README.md: Project documentation outlining the architecture, features, setup instructions, and build screenshots.
+
+yolov8n.pt: A pre-trained PyTorch weight file for the Ultralytics YOLOv8 Nano object detection model—likely a remnant from earlier local vision testing before switching to Gemini multimodal inference.
 
 ### Project Demo
 # Video
 [Add your demo video link here]
 *Explain what the video demonstrates*
 
-# Additional Demos
-[Add any extra demo materials/links]
+
 
 ## Team Contributions
-- [Name 1]: [Specific contributions]
-- [Name 2]: [Specific contributions]
-- [Name 3]: [Specific contributions]
+- [Jibin James]: [Whole project] #single everywhere:(
+
 
 ---
 Made with ❤️ at TinkerHub Useless Projects 
