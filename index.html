@@ -187,6 +187,7 @@
     .pill.danger { background: rgba(255, 51, 102, 0.2); color: var(--neon-red); border: 1px solid var(--neon-red); }
 
     #dock {
+      display: none;
       position: absolute;
       bottom: 24px;
       left: 50%;
@@ -273,7 +274,16 @@
     <div class="radar-line"></div>
     <video id="webcam" autoplay playsinline muted></video>
     <canvas id="overlay"></canvas>
-
+<!-- Camera Start Modal -->
+    <div id="start-modal">
+      <div class="start-card">
+        <h2 style="color: #fff; letter-spacing: 2px; font-size: 18px; margin-bottom: 8px;">NEXUS OPTICAL ENGINE</h2>
+        <p style="color: #8da4b8; font-size: 13px; line-height: 1.5;">Hardware sensor is currently disengaged. Engage camera access to initialize spatial grounding.</p>
+        <button class="open-cam-btn" onclick="startCameraSession()">
+          <span>ENGAGE CAMERA</span>
+        </button>
+      </div>
+    </div>
     <header>
       <div class="brand">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
