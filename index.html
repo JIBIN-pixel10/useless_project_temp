@@ -21,6 +21,48 @@
       height: 100vh;
       width: 100vw;
     }
+    /* Camera Initialization Modal */
+    #start-modal {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: radial-gradient(circle at center, rgba(8, 14, 24, 0.94) 0%, rgba(2, 4, 6, 0.98) 100%);
+      z-index: 50;
+      text-align: center;
+      padding: 24px;
+    }
+    .start-card {
+      max-width: 440px;
+      padding: 36px 28px;
+      border: 1px solid var(--panel-border);
+      border-radius: 16px;
+      background: var(--panel-bg);
+      backdrop-filter: blur(20px);
+      box-shadow: 0 0 50px rgba(0, 240, 255, 0.15);
+    }
+    .open-cam-btn {
+      margin-top: 20px;
+      background: linear-gradient(135deg, var(--neon-cyan), #0077ff);
+      color: #03080f;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      font-size: 13px;
+      border: none;
+      border-radius: 30px;
+      padding: 14px 28px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.2s ease;
+    }
+    .open-cam-btn:hover {
+      box-shadow: 0 0 24px var(--neon-cyan);
+      transform: scale(1.03);
+    }
     #viewport {
       position: relative;
       width: 100vw;
