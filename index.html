@@ -9,15 +9,14 @@
       --neon-cyan: #00f0ff;
       --neon-green: #00ff88;
       --neon-red: #ff3366;
-      --bg-dark: rgba(10, 14, 22, 0.85);
-      --border-cyan: rgba(0, 240, 255, 0.35);
-      --border-red: rgba(255, 51, 102, 0.4);
+      --panel-bg: rgba(8, 12, 18, 0.84);
+      --panel-border: rgba(0, 240, 255, 0.28);
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      background: #05070a;
-      color: #e0f8ff;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, monospace;
+      background: #020406;
+      color: #e2f4ff;
+      font-family: Consolas, "Courier New", monospace;
       overflow: hidden;
       height: 100vh;
       width: 100vw;
@@ -36,115 +35,127 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
+      transform: scaleX(-1); /* Mirror webcam view */
     }
-    .grid-overlay {
+    canvas {
+      transform: none; /* Canvas renders in standard screen coordinates */
+    }
+    .hud-grid {
       position: absolute;
       inset: 0;
       pointer-events: none;
-      background: linear-gradient(rgba(0, 240, 255, 0.04) 1px, transparent 1px),
-                  linear-gradient(90deg, rgba(0, 240, 255, 0.04) 1px, transparent 1px);
-      background-size: 40px 40px;
+      background: linear-gradient(rgba(0, 240, 255, 0.035) 1px, transparent 1px),
+                  linear-gradient(90deg, rgba(0, 240, 255, 0.035) 1px, transparent 1px);
+      background-size: 48px 48px;
       z-index: 2;
     }
     header {
       position: absolute;
-      top: 20px;
-      left: 24px;
-      right: 24px;
+      top: 18px;
+      left: 20px;
+      right: 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 12px 24px;
-      background: var(--bg-dark);
-      backdrop-filter: blur(16px);
-      border: 1px solid var(--border-cyan);
+      background: var(--panel-bg);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--panel-border);
       border-radius: 12px;
       z-index: 10;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
     }
     .brand {
-      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
       letter-spacing: 2px;
       color: var(--neon-cyan);
-      font-size: 16px;
+      font-size: 15px;
     }
     .nav-actions {
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 12px;
     }
-    .status-pill {
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
       font-size: 11px;
-      background: rgba(0, 255, 136, 0.15);
+      background: rgba(0, 255, 136, 0.12);
       color: var(--neon-green);
       padding: 5px 12px;
       border-radius: 20px;
-      border: 1px solid rgba(0, 255, 136, 0.4);
-      display: flex;
-      align-items: center;
-      gap: 6px;
+      border: 1px solid rgba(0, 255, 136, 0.35);
     }
-    .dot { width: 7px; height: 7px; background: var(--neon-green); border-radius: 50%; box-shadow: 0 0 8px var(--neon-green); }
-
-    /* Tactical Exit Button */
-    #exit-btn {
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      background: var(--neon-green);
+      border-radius: 50%;
+      box-shadow: 0 0 10px var(--neon-green);
+    }
+    .exit-btn {
       background: rgba(255, 51, 102, 0.12);
       color: var(--neon-red);
       font-weight: 700;
       font-size: 11px;
       letter-spacing: 1px;
-      border: 1px solid var(--border-red);
+      border: 1px solid rgba(255, 51, 102, 0.4);
       border-radius: 20px;
-      padding: 6px 14px;
+      padding: 6px 16px;
       cursor: pointer;
       display: flex;
       align-items: center;
       gap: 6px;
       transition: all 0.2s ease;
     }
-    #exit-btn:hover {
+    .exit-btn:hover {
       background: var(--neon-red);
       color: #fff;
       box-shadow: 0 0 16px var(--neon-red);
-      transform: scale(1.04);
     }
-    
+
     #telemetry {
       position: absolute;
-      top: 90px;
-      left: 24px;
-      width: 360px;
-      padding: 16px;
-      background: var(--bg-dark);
-      backdrop-filter: blur(16px);
-      border: 1px solid var(--border-cyan);
+      top: 85px;
+      left: 20px;
+      width: 380px;
+      padding: 16px 20px;
+      background: var(--panel-bg);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--panel-border);
       border-radius: 12px;
       z-index: 10;
       display: none;
+      box-shadow: 0 12px 35px rgba(0,0,0,0.7);
     }
-    .badge {
+    .pill {
       display: inline-block;
       font-size: 10px;
-      font-weight: bold;
+      font-weight: 700;
       letter-spacing: 1px;
       padding: 3px 8px;
       border-radius: 4px;
       margin-bottom: 8px;
     }
-    .badge.success { background: rgba(0, 255, 136, 0.2); color: var(--neon-green); border: 1px solid var(--neon-green); }
-    .badge.danger { background: rgba(255, 51, 102, 0.2); color: var(--neon-red); border: 1px solid var(--neon-red); }
+    .pill.success { background: rgba(0, 255, 136, 0.2); color: var(--neon-green); border: 1px solid var(--neon-green); }
+    .pill.danger { background: rgba(255, 51, 102, 0.2); color: var(--neon-red); border: 1px solid var(--neon-red); }
 
-    #control-dock {
+    #dock {
       position: absolute;
-      bottom: 28px;
+      bottom: 24px;
       left: 50%;
       transform: translateX(-50%);
       display: flex;
       align-items: center;
       gap: 12px;
       padding: 8px 14px;
-      background: var(--bg-dark);
-      backdrop-filter: blur(20px);
-      border: 1px solid var(--border-cyan);
+      background: var(--panel-bg);
+      backdrop-filter: blur(24px);
+      border: 1px solid var(--panel-border);
       border-radius: 50px;
       z-index: 10;
       box-shadow: 0 10px 40px rgba(0, 240, 255, 0.15);
@@ -154,120 +165,107 @@
       border: none;
       outline: none;
       color: #fff;
-      font-size: 15px;
+      font-family: inherit;
+      font-size: 14px;
       padding: 10px 14px;
-      width: 250px;
+      width: 240px;
     }
     #scan-btn {
       background: linear-gradient(135deg, var(--neon-cyan), #0077ff);
-      color: #050a14;
+      color: #03080f;
       font-weight: 800;
       border: none;
       border-radius: 30px;
       padding: 12px 24px;
       cursor: pointer;
-      letter-spacing: 1px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
       transition: all 0.2s ease;
     }
-    #scan-btn:hover { box-shadow: 0 0 20px var(--neon-cyan); transform: scale(1.03); }
-    #scan-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    #scan-btn:hover {
+      box-shadow: 0 0 24px var(--neon-cyan);
+      transform: scale(1.02);
+    }
+    #scan-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
 
-    /* Session Terminated Standby Screen */
-    #shutdown-overlay {
+    .radar-line {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--neon-cyan), transparent);
+      box-shadow: 0 0 16px var(--neon-cyan);
+      opacity: 0;
+      z-index: 4;
+    }
+    .scanning .radar-line {
+      opacity: 1;
+      animation: radarScan 1.6s infinite ease-in-out;
+    }
+    @keyframes radarScan {
+      0% { top: 0%; }
+      50% { top: 100%; }
+      100% { top: 0%; }
+    }
+
+    #shutdown-view {
       position: absolute;
       inset: 0;
-      background: rgba(4, 6, 10, 0.96);
+      background: rgba(3, 5, 8, 0.96);
       display: none;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       z-index: 100;
     }
-    #shutdown-overlay h2 {
-      color: var(--neon-red);
-      letter-spacing: 4px;
-      font-size: 24px;
-      margin-bottom: 12px;
-    }
-    #shutdown-overlay p {
-      color: #7a8fa3;
-      font-size: 13px;
-      margin-bottom: 24px;
-      letter-spacing: 1px;
-    }
-    #reconnect-btn {
-      background: transparent;
-      border: 1px solid var(--neon-cyan);
-      color: var(--neon-cyan);
-      padding: 10px 24px;
-      border-radius: 30px;
-      font-weight: 700;
-      cursor: pointer;
-      letter-spacing: 1px;
-      transition: all 0.2s ease;
-    }
-    #reconnect-btn:hover {
-      background: var(--neon-cyan);
-      color: #040608;
-      box-shadow: 0 0 20px var(--neon-cyan);
-    }
-
-    .radar-sweep {
-      position: absolute;
-      top: 0; left: 0; width: 100%; height: 4px;
-      background: linear-gradient(90deg, transparent, var(--neon-cyan), transparent);
-      box-shadow: 0 0 15px var(--neon-cyan);
-      opacity: 0;
-      z-index: 4;
-    }
-    .scanning .radar-sweep {
-      opacity: 1;
-      animation: sweep 1.8s infinite ease-in-out;
-    }
-    @keyframes sweep {
-      0% { top: 0%; }
-      50% { top: 100%; }
-      100% { top: 0%; }
-    }
   </style>
 </head>
 <body>
   <div id="viewport">
-    <div class="grid-overlay"></div>
-    <div class="radar-sweep" id="radar"></div>
+    <div class="hud-grid"></div>
+    <div class="radar-line"></div>
     <video id="webcam" autoplay playsinline muted></video>
     <canvas id="overlay"></canvas>
 
     <header>
-      <div class="brand">NEXUS // SPATIAL AI OPTIMIZER</div>
+      <div class="brand">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+          <polyline points="2 17 12 22 22 17"></polyline>
+          <polyline points="2 12 12 17 22 12"></polyline>
+        </svg>
+        <span>NEXUS // SPATIAL AI</span>
+      </div>
       <div class="nav-actions">
-        <div class="status-pill"><div class="dot"></div> ENGINE ONLINE</div>
-        <button id="exit-btn" onclick="terminateSession()">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-            <line x1="18" y1="6" x2="6" y2="18"></line>
-            <line x1="6" y1="6" x2="18" y2="18"></line>
-          </svg>
-          EXIT
-        </button>
+        <div class="status-badge"><div class="status-dot"></div> ENGINE ONLINE</div>
+        <button class="exit-btn" onclick="terminateSession()">EXIT</button>
       </div>
     </header>
 
     <div id="telemetry">
-      <div id="telemetry-badge" class="badge">STATUS</div>
+      <div id="telemetry-pill" class="pill">DIAGNOSTIC</div>
       <div id="telemetry-reason" style="font-size: 13px; line-height: 1.5; margin-bottom: 8px;">Awaiting scan target...</div>
       <div id="telemetry-hazards" style="font-size: 11px; color: var(--neon-cyan);"></div>
     </div>
 
-    <div id="control-dock">
-      <input type="text" id="item-input" value="Water Bottle" placeholder="Target item to place..." />
-      <button id="scan-btn" onclick="executeScan()">EXECUTE SCAN</button>
+    <div id="dock">
+      <input type="text" id="item-input" value="painting" placeholder="Target item to place/mount..." />
+      <button id="scan-btn" onclick="executeScan()">
+        <span>EXECUTE SCAN</span>
+      </button>
     </div>
 
-    <!-- Terminated Standby Screen -->
-    <div id="shutdown-overlay">
-      <h2>// SYSTEM TERMINATED</h2>
-      <p>CAMERA STREAM OFFLINE • TELEMETRY DISENGAGED</p>
-      <button id="reconnect-btn" onclick="restartSession()">REINITIALIZE SYSTEM</button>
+    <div id="shutdown-view">
+      <h2 style="color: var(--neon-red); letter-spacing: 3px; margin-bottom: 12px;">// SYSTEM TERMINATED</h2>
+      <p style="color: #8da4b8; font-size: 13px; margin-bottom: 24px;">CAMERA FEED DEACTIVATED • HARDWARE DISENGAGED</p>
+      <button onclick="restartSession()" style="background: transparent; border: 1px solid var(--neon-cyan); color: var(--neon-cyan); padding: 10px 24px; border-radius: 30px; font-family: inherit; font-weight: 700; cursor: pointer;">
+        REINITIALIZE ENGINE
+      </button>
     </div>
   </div>
 
@@ -278,67 +276,62 @@
     const itemInput = document.getElementById('item-input');
     const scanBtn = document.getElementById('scan-btn');
     const telemetry = document.getElementById('telemetry');
-    const tBadge = document.getElementById('telemetry-badge');
+    const tPill = document.getElementById('telemetry-pill');
     const tReason = document.getElementById('telemetry-reason');
     const tHazards = document.getElementById('telemetry-hazards');
     const viewport = document.getElementById('viewport');
-    const shutdownOverlay = document.getElementById('shutdown-overlay');
+    const shutdownView = document.getElementById('shutdown-view');
 
-    let currentStream = null;
-    let currentBox = null;
-    let targetName = "";
-    let animationFrameId = null;
+    let stream = null;
+    let targetBox = null;
+    let animatedBox = null;
+    let currentItem = "";
+    let animId = null;
 
-    function setCanvasDimensions() {
+    function syncDimensions() {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
     }
-    setCanvasDimensions();
-    window.addEventListener('resize', setCanvasDimensions);
+    window.addEventListener('resize', syncDimensions);
+    syncDimensions();
 
     async function initCamera() {
       try {
-        currentStream = await navigator.mediaDevices.getUserMedia({
-          video: { facingMode: "environment" }
+        stream = await navigator.mediaDevices.getUserMedia({
+          video: { width: { ideal: 1920 }, height: { ideal: 1080 }, facingMode: "environment" }
         });
-        video.srcObject = currentStream;
+        video.srcObject = stream;
         video.play();
-        renderLoop();
+        render();
       } catch (err) {
-        alert("Camera access required: " + err.message);
+        alert("Camera access error: " + err.message);
       }
     }
 
     function terminateSession() {
-      // 1. Kill all camera tracks so hardware indicator LED turns off
-      if (currentStream) {
-        currentStream.getTracks().forEach(track => track.stop());
-        currentStream = null;
+      if (stream) {
+        stream.getTracks().forEach(t => t.stop());
+        stream = null;
       }
       video.srcObject = null;
-
-      // 2. Stop render loop & clear canvas
-      if (animationFrameId) {
-        cancelAnimationFrame(animationFrameId);
-      }
+      if (animId) cancelAnimationFrame(animId);
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      currentBox = null;
+      targetBox = null;
+      animatedBox = null;
       telemetry.style.display = "none";
-
-      // 3. Show standby shutdown overlay
-      shutdownOverlay.style.display = "flex";
+      shutdownView.style.display = "flex";
     }
 
     function restartSession() {
-      shutdownOverlay.style.display = "none";
+      shutdownView.style.display = "none";
       initCamera();
     }
 
-    function drawCornerBrackets(x1, y1, x2, y2, color, len = 20) {
+    function drawBrackets(x1, y1, x2, y2, color, len = 20) {
       ctx.strokeStyle = color;
       ctx.lineWidth = 3;
       ctx.shadowColor = color;
-      ctx.shadowBlur = 10;
+      ctx.shadowBlur = 12;
       ctx.beginPath(); ctx.moveTo(x1, y1 + len); ctx.lineTo(x1, y1); ctx.lineTo(x1 + len, y1); ctx.stroke();
       ctx.beginPath(); ctx.moveTo(x2 - len, y1); ctx.lineTo(x2, y1); ctx.lineTo(x2, y1 + len); ctx.stroke();
       ctx.beginPath(); ctx.moveTo(x1, y2 - len); ctx.lineTo(x1, y2); ctx.lineTo(x1 + len, y2); ctx.stroke();
@@ -346,18 +339,44 @@
       ctx.shadowBlur = 0;
     }
 
-    function renderLoop() {
+    function render() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      if (currentBox) {
-        const [ymin, xmin, ymax, xmax] = currentBox;
-        const x1 = (xmin / 1000) * canvas.width;
-        const y1 = (ymin / 1000) * canvas.height;
-        const x2 = (xmax / 1000) * canvas.width;
-        const y2 = (ymax / 1000) * canvas.height;
 
-        ctx.fillStyle = "rgba(0, 255, 136, 0.15)";
+      if (targetBox && video.videoWidth > 0) {
+        if (!animatedBox) animatedBox = [...targetBox];
+        for (let i = 0; i < 4; i++) {
+          animatedBox[i] += (targetBox[i] - animatedBox[i]) * 0.18;
+        }
+
+        const [ymin, xmin, ymax, xmax] = animatedBox;
+        const vRatio = video.videoWidth / video.videoHeight;
+        const cRatio = canvas.width / canvas.height;
+
+        let renderW, renderH, offX, offY;
+        if (cRatio > vRatio) {
+          renderW = canvas.width;
+          renderH = canvas.width / vRatio;
+          offX = 0;
+          offY = (canvas.height - renderH) / 2;
+        } else {
+          renderW = canvas.height * vRatio;
+          renderH = canvas.height;
+          offX = (canvas.width - renderW) / 2;
+          offY = 0;
+        }
+
+        // Horizontal flip mapping: Invert X for mirrored webcam view
+        const mirroredXmin = 1000 - xmax;
+        const mirroredXmax = 1000 - xmin;
+
+        const x1 = offX + (mirroredXmin / 1000) * renderW;
+        const y1 = offY + (ymin / 1000) * renderH;
+        const x2 = offX + (mirroredXmax / 1000) * renderW;
+        const y2 = offY + (ymax / 1000) * renderH;
+
+        ctx.fillStyle = "rgba(0, 255, 136, 0.18)";
         ctx.fillRect(x1, y1, x2 - x1, y2 - y1);
-        drawCornerBrackets(x1, y1, x2, y2, "#00ff88", 22);
+        drawBrackets(x1, y1, x2, y2, "#00ff88", 22);
 
         const cx = (x1 + x2) / 2;
         const cy = (y1 + y2) / 2;
@@ -367,26 +386,27 @@
         ctx.stroke();
 
         ctx.fillStyle = "#00ff88";
-        ctx.font = "bold 13px monospace";
-        ctx.fillText(`TARGET ZONE // ${targetName.toUpperCase()}`, x1, y1 - 10);
+        ctx.font = "700 12px monospace";
+        ctx.fillText(`LOCKED // ${currentItem.toUpperCase()}`, x1, Math.max(22, y1 - 10));
       }
-      animationFrameId = requestAnimationFrame(renderLoop);
+
+      animId = requestAnimationFrame(render);
     }
 
     async function executeScan() {
       const item = itemInput.value.trim();
-      if (!item || !currentStream) return;
+      if (!item || !stream) return;
 
       scanBtn.disabled = true;
-      scanBtn.textContent = "ANALYZING...";
+      scanBtn.querySelector("span").textContent = "CALCULATING...";
       viewport.classList.add("scanning");
 
-      const tempCanvas = document.createElement('canvas');
-      tempCanvas.width = video.videoWidth || 640;
-      tempCanvas.height = video.videoHeight || 480;
-      const tCtx = tempCanvas.getContext('2d');
-      tCtx.drawImage(video, 0, 0, tempCanvas.width, tempCanvas.height);
-      const b64 = tempCanvas.toDataURL('image/jpeg', 0.85);
+      const captureCanvas = document.createElement('canvas');
+      captureCanvas.width = video.videoWidth || 1280;
+      captureCanvas.height = video.videoHeight || 720;
+      const cCtx = captureCanvas.getContext('2d');
+      cCtx.drawImage(video, 0, 0, captureCanvas.width, captureCanvas.height);
+      const b64 = captureCanvas.toDataURL('image/jpeg', 0.92);
 
       try {
         const res = await fetch('/api/scan', {
@@ -398,24 +418,25 @@
 
         telemetry.style.display = "block";
         if (data.space_found && data.box_2d) {
-          currentBox = data.box_2d;
-          targetName = item;
-          tBadge.className = "badge success";
-          tBadge.textContent = "COORDINATES LOCKED";
+          targetBox = data.box_2d;
+          currentItem = item;
+          tPill.className = "pill success";
+          tPill.textContent = `OPTIMAL LOCK (${data.confidence_score || 96}%)`;
           tReason.textContent = data.reasoning;
-          tHazards.textContent = data.hazards_avoided?.length ? "Protected: " + data.hazards_avoided.join(", ") : "";
+          tHazards.textContent = data.hazards_avoided?.length ? "Mitigated: " + data.hazards_avoided.join(" • ") : "";
         } else {
-          currentBox = null;
-          tBadge.className = "badge danger";
-          tBadge.textContent = "NO CLEARANCE DETECTED";
-          tReason.textContent = data.reasoning || "Workspace blocked.";
+          targetBox = null;
+          animatedBox = null;
+          tPill.className = "pill danger";
+          tPill.textContent = "SPACE BLOCKED / UNCLEAR";
+          tReason.textContent = data.reasoning || "No unobstructed surface detected.";
           tHazards.textContent = "";
         }
       } catch (err) {
         alert("Scan Error: " + err.message);
       } finally {
         scanBtn.disabled = false;
-        scanBtn.textContent = "EXECUTE SCAN";
+        scanBtn.querySelector("span").textContent = "EXECUTE SCAN";
         viewport.classList.remove("scanning");
       }
     }
