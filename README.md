@@ -106,7 +106,7 @@ yolov8n.pt: A pre-trained PyTorch weight file for the Ultralytics YOLOv8 Nano ob
 ### Project Demo
 deplyed project link : https://useless-project-temp-ar3c.onrender.com/
 # Video
-
+demo link : https://youtu.be/mf6twTIVyts
 
 
 
