@@ -115,7 +115,7 @@ yolov8n.pt: A pre-trained PyTorch weight file for the Ultralytics YOLOv8 Nano ob
 
 
 ## Team Contributions
-- [Jibin James]: [Whole project] #single everywhere:(
+- [Jibin James]: [Whole project]     #single everywhere:(
 
 
 ---
